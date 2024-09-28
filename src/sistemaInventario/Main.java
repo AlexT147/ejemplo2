@@ -1,8 +1,11 @@
 package sistemaInventario;
 import java.util.Scanner;
-
+import java.util.logging.Logger;
 // Clase principal del programa
 public class Main {
+    private static final Logger logger = Logger.getLogger(Main.class.getName());
+    private static final String MENSAJE_OPCION_INVALIDA = "Opción inválida. Por favor ingrese una opción válida.";
+    private static final String MENSAJE_ENTRADA_NO_VALIDA = "Entrada no válida. Por favor ingrese un número.";
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -15,13 +18,7 @@ public class Main {
         int opcion = 0;
         // Bucle principal del menú de opciones
         do {
-            System.out.println("\n------ Menú de Opciones ------");
-            System.out.println("1. Agregar producto al inventario");
-            System.out.println("2. Realizar una venta");
-            System.out.println("3. Ver inventario");
-            System.out.println("4. Ver historial de ventas");
-            System.out.println("5. Salir");
-            System.out.print("Ingrese la opción deseada: ");
+            mostrarMenu();
             if (scanner.hasNextInt()) {
                 opcion = scanner.nextInt();
                 scanner.nextLine(); // Consume la nueva línea
@@ -40,19 +37,29 @@ public class Main {
                         venta.imprimirHistorialVentas(inventario);
                         break;
                     case 5:
-                        System.out.println("Saliendo del programa...");
+                        logger.info("Saliendo del programa...");
                         break;
                     default:
-                        System.out.println("Opción inválida. Por favor ingrese una opción válida.");
+                        logger.warning(MENSAJE_OPCION_INVALIDA);
                         break;
                 }
             } else {
-                System.out.println("Entrada no válida. Por favor ingrese un número.");
-                scanner.next();
+                logger.warning(MENSAJE_ENTRADA_NO_VALIDA);
+                scanner.next(); // Limpiar la entrada incorrecta
             }
         } while (opcion != 5);
 
         scanner.close(); // Cierra el objeto Scanner
+    }
+
+    private static void mostrarMenu() {
+        logger.info("\n------ Menú de Opciones ------");
+        logger.info("1. Agregar producto al inventario");
+        logger.info("2. Realizar una venta");
+        logger.info("3. Ver inventario");
+        logger.info("4. Ver historial de ventas");
+        logger.info("5. Salir");
+        logger.info("Ingrese la opción deseada: ");
     }
 
     // Método para agregar un producto al inventario

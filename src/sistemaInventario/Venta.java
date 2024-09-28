@@ -43,15 +43,15 @@ public class Venta {
 
             // Actualiza el inventario del producto
             producto.vender(cantidad);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
-        } catch (IllegalStateException e) {
-            System.out.println("Error: " + e.getMessage());
+        } catch (IllegalArgumentException | IllegalStateException e) {
+        System.out.println("Error: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Error inesperado: " + e.getMessage());
         }
     }
-
+    
+    
+    
     // Método para imprimir el recibo de la venta
     public void imprimirRecibo() {
         if (cantidadProductos == 0) {
